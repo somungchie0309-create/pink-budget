@@ -1,13 +1,44 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Intro } from '@/components/Intro';
+import { Dashboard } from '@/components/Dashboard';
+import { useBudget } from '@/hooks/useBudget';
 
 const Index = () => {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+  const {
+    user,
+    budgets,
+    expenses,
+    isLoading,
+    createUser,
+    deleteUser,
+    createBudget,
+    deleteBudget,
+    createExpense,
+    deleteExpense,
+  } = useBudget();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
-    </div>
+    );
+  }
+
+  if (!user) {
+    return <Intro onCreateUser={createUser} />;
+  }
+
+  return (
+    <Dashboard
+      userName={user.userName}
+      budgets={budgets}
+      expenses={expenses}
+      onCreateBudget={createBudget}
+      onDeleteBudget={deleteBudget}
+      onCreateExpense={createExpense}
+      onDeleteExpense={deleteExpense}
+      onDeleteUser={deleteUser}
+    />
   );
 };
 

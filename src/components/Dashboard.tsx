@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Budget, Expense, formatCurrency } from '@/lib/budget';
 import { Button } from '@/components/ui/button';
 import { BudgetForm } from '@/components/BudgetForm';
@@ -6,8 +7,8 @@ import { BudgetCard } from '@/components/BudgetCard';
 import { ExpenseForm } from '@/components/ExpenseForm';
 import { ExpenseList } from '@/components/ExpenseList';
 import { BudgetDetail } from '@/components/BudgetDetail';
-import { LogOut, Wallet, TrendingUp, PiggyBank } from 'lucide-react';
-
+import { ChatBot } from '@/components/ChatBot';
+import { LogOut, Wallet, TrendingUp, PiggyBank, Info } from 'lucide-react';
 interface DashboardProps {
   userName: string;
   budgets: Budget[];
@@ -68,6 +69,12 @@ export const Dashboard = ({
               Here's your financial overview
             </p>
           </div>
+          <Link to="/about">
+            <Button variant="ghost" className="text-muted-foreground hover:text-primary">
+              <Info className="w-4 h-4 mr-2" />
+              About
+            </Button>
+          </Link>
           <Button
             variant="ghost"
             onClick={onDeleteUser}
@@ -155,6 +162,9 @@ export const Dashboard = ({
             </p>
           </div>
         )}
+
+        {/* ChatBot */}
+        <ChatBot budgets={budgets} expenses={expenses} />
       </div>
     </div>
   );
